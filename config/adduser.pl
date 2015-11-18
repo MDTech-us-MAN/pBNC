@@ -128,17 +128,17 @@ if (!$UserInfo{'serverhost'}) {
 print "\n\nWhat is the port that will be used to connect to IRC? [6667] ";
 
 # Save the reply.
-$UserInfo{'serverip'} = <STDIN>;
+$UserInfo{'serverport'} = <STDIN>;
 
 # Remove the newline.
-chomp($UserInfo{'serverip'});
+chomp($UserInfo{'serverport'});
 
 # Remove leading and trailing spaces.
-$UserInfo{'serverip'} = trim($UserInfo{'serverip'});
+$UserInfo{'serverport'} = trim($UserInfo{'serverport'});
 
 # If no entry, exit.
-if (!$UserInfo{'serverip'}) {
-        $UserInfo{'serverip'} = "6667";
+if (!$UserInfo{'serverport'}) {
+        $UserInfo{'serverport'} = "6667";
 }
 
 
@@ -188,15 +188,8 @@ if (-e "$UserConfFile") {
 
 print "\nWriting configuration file... ";
 
-# Create new config.
-my $Config = Config::Tiny->new;
-
-# Write To config.
-$Config->{UserInfo} = \%UserInfo;
-
-# Save config.
-$Config->write("$UserConfFile", 'utf8');
-
+# Write Config File.
+WriteConfig($UserConfFile, %UserInfo);
 
 print "\n\nNew User has been added successfully.";
 
